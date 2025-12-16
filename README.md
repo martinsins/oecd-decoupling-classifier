@@ -85,7 +85,7 @@ oecd-decoupling-classifier/
 
 --- 
 
-##How to Run the Pipeline
+## How to Run the Pipeline
 
 From the repository root:   python main.py
 
@@ -98,7 +98,9 @@ Running this command:
 
 Generated outputs are intentionally not tracked by Git and can be reproduced at any time.
 
-##Notebooks
+--- 
+
+## Notebooks
 
 Notebooks are included for transparency and documentation but are not required to reproduce the main results:
     - 01_build_panel.ipynb documents data construction and cleaning steps.
@@ -108,7 +110,7 @@ All results in the main text are produced via main.py.
 
 ---
 
-##Data Dictionary
+## Data Dictionary
 | Variable       | Description                                   | Unit / Type   |
 | -------------- | --------------------------------------------- | ------------- |
 | country        | Country name                                  | string        |
@@ -122,7 +124,7 @@ All results in the main text are produced via main.py.
 
 ---
 
-##Reproducibility
+## Reproducibility
 
 All results reported in the accompanying project report are generated programmatically through main.py.
 No manual intervention or notebook execution is required to reproduce the analysis.
