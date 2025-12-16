@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
+data/raw/
+data/processed/
+*.csv
+*.zip
+
+results/
+
+*.log
