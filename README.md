@@ -82,7 +82,9 @@ oecd-decoupling-classifier/
 ├── .gitignore
 └── README.md
 ```
+
 --- 
+
 ##How to Run the Pipeline
 
 From the repository root:   python main.py
@@ -103,7 +105,9 @@ Notebooks are included for transparency and documentation but are not required t
     - 02_appendix_figures.ipynb generates supplementary figures reported in Appendix A of the paper.
 
 All results in the main text are produced via main.py.
+
 ---
+
 ##Data Dictionary
 | Variable       | Description                                   | Unit / Type   |
 | -------------- | --------------------------------------------- | ------------- |
@@ -115,7 +119,9 @@ All results in the main text are produced via main.py.
 | co2_per_capita | CO₂ emissions per capita                      | tCO₂ / person |
 | delta_co2      | Year-over-year change in total CO₂ emissions  | MtCO₂         |
 | decoupled      | 1 if GDP growth > 0 and delta_co2 < 0, else 0 | binary        |
+
 ---
+
 ##Reproducibility
 
 All results reported in the accompanying project report are generated programmatically through main.py.
