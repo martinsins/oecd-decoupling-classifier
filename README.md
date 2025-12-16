@@ -19,6 +19,9 @@ The analysis is designed as an applied data-science exercise with an emphasis on
 - **Sources:**  
   - World Bank, *World Development Indicators* (GDP growth)  
   - Our World in Data, *CO₂ and Greenhouse Gas Emissions*  
+  
+Details on raw data acquisition and source URLs are provided in `notebooks/01_build_panel.ipynb`.
+
 
 ### Outcome Variable
 A binary indicator `decoupled` is constructed such that:
@@ -73,7 +76,8 @@ oecd-decoupling-classifier/
 │   ├── 01_build_panel.ipynb      # Data construction and validation
 │   └── 02_appendix_figures.ipynb # Supplementary figures for the appendix
 ├── data/
-│   └── processed/             # Local processed data (ignored by Git)
+│   ├── raw/                   # Raw source files (ignored by Git; not all used)
+│   └── processed/             # Generated panel data (ignored by Git)
 ├── results/
 │   ├── metrics/               # Generated evaluation outputs (ignored by Git)
 │   └── figures/               # Generated figures (ignored by Git)
@@ -127,7 +131,7 @@ All results in the main text are produced via `main.py`.
 
 ## Reproducibility
 
-All results reported in the accompanying project report are generated programmatically through `main.py`.
-No manual intervention or notebook execution is required to reproduce the analysis.
+All results reported in the accompanying report are generated programmatically via `main.py`.
 
-The repository follows standard data-science best practices by separating source code, documentation, and generated outputs.
+Raw data files are intentionally excluded from the repository via `.gitignore`.  
+The data sources and download logic are documented explicitly in the notebook `notebooks/01_build_panel.ipynb`, which retrieves the original public datasets (OECD, OWID, World Bank) and constructs the final processed panel.
