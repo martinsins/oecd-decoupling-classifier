@@ -87,14 +87,15 @@ oecd-decoupling-classifier/
 
 ## How to Run the Pipeline
 
-From the repository root:   python main.py
+From the repository root:
+`python main.py`  
 
 Running this command:
-  - trains all models on 2010–2021 data,
-  - tunes the logistic classification threshold on 2022,
-    - evaluates performance on the 2023 test set,
-    - saves metrics to results/metrics/,
-    - saves figures (confusion matrices and feature importances) to results/figures/.
+- trains all models on 2010–2021 data,
+- tunes the logistic classification threshold on 2022,
+- evaluates performance on the 2023 test set,
+- saves metrics to `results/metrics/`,
+- saves figures (confusion matrices and feature importances) to `results/figures/`.
 
 Generated outputs are intentionally not tracked by Git and can be reproduced at any time.
 
@@ -103,10 +104,10 @@ Generated outputs are intentionally not tracked by Git and can be reproduced at 
 ## Notebooks
 
 Notebooks are included for transparency and documentation but are not required to reproduce the main results:
-    - 01_build_panel.ipynb documents data construction and cleaning steps.
-    - 02_appendix_figures.ipynb generates supplementary figures reported in Appendix A of the paper.
+- `01_build_panel.ipynb` documents data construction and cleaning steps.
+- `02_appendix_figures.ipynb` generates supplementary figures reported in Appendix A of the paper.
 
-All results in the main text are produced via main.py.
+All results in the main text are produced via `main.py`.
 
 ---
 
@@ -126,7 +127,7 @@ All results in the main text are produced via main.py.
 
 ## Reproducibility
 
-All results reported in the accompanying project report are generated programmatically through main.py.
+All results reported in the accompanying project report are generated programmatically through `main.py`.
 No manual intervention or notebook execution is required to reproduce the analysis.
 
 The repository follows standard data-science best practices by separating source code, documentation, and generated outputs.
