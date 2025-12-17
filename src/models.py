@@ -50,3 +50,21 @@ def majority_class_baseline(
     """
     # value_counts() returns counts by class label; idxmax() gives the most frequent label
     return int(y_train.value_counts().idxmax())
+
+def forecast_carry_forward_baseline(
+    df_test: pd.DataFrame,
+    df_full: pd.DataFrame,
+    target_col: str = "decoupled",
+    majority_class: int = 0,
+) -> np.ndarray:
+    """
+    Forecast baseline: predict decoupled_{t+1} using observed decoupled_{t}.
+    For each test row at feature year t, return label at year t for that country.
+    """
+    cur = df_full[["iso3", "year", target_col]].copy()
+    cur = cur.rename(columns={target_col: "cur_label"})
+
+    out = df_test[["iso3", "year"]].merge(cur, on=["iso3", "year"], how="left")
+    out["cur_label"] = out["cur_label"].fillna(majority_class).astype(int)
+    return out["cur_label"].to_numpy()
+

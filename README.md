@@ -10,6 +10,8 @@ The analysis is designed as an applied data-science exercise with an emphasis on
 
 **Can contemporaneously observable macroeconomic and environmental indicators predict economic–environmental decoupling at the country–year level?**
 
+As a robustness check, the analysis additionally evaluates one-year-ahead forecasting performance by predicting decoupling at \(t+1\)  using features observed at \(t\) .
+
 ---
 
 ## Data
@@ -61,6 +63,12 @@ The pipeline estimates and compares:
 
 Model performance is evaluated on a **held-out 2023 test set** using accuracy and the F1-score.
 
+### Robustness: One-year-ahead Forecasting
+
+As a robustness check, the pipeline also evaluates a genuine forecasting task in which decoupling outcomes in year \(t+1\) are predicted using features observed in year \(t\). This setup removes contemporaneous information and helps distinguish mechanical alignment with the labeling rule from stable out-of-sample predictive structure.
+
+Forecasting performance is evaluated using the same models and baselines, with results reported separately in the accompanying paper.
+
 ---
 
 ## Project Structure
@@ -100,6 +108,7 @@ Running this command:
 - evaluates performance on the 2023 test set,
 - saves metrics to `results/metrics/`,
 - saves figures (confusion matrices and feature importances) to `results/figures/`.
+- runs an additional one-year-ahead forecasting robustness check and saves corresponding metrics.
 
 Generated outputs are intentionally not tracked by Git and can be reproduced at any time.
 
@@ -135,3 +144,5 @@ All results reported in the accompanying report are generated programmatically v
 
 Raw data files are intentionally excluded from the repository via `.gitignore`.  
 The data sources and download logic are documented explicitly in the notebook `notebooks/01_build_panel.ipynb`, which retrieves the original public datasets (OECD, OWID, World Bank) and constructs the final processed panel.
+
+The pipeline additionally produces evaluation outputs for a one-year-ahead forecasting robustness check; these results are documented and interpreted in the report but are generated automatically using the same entry point.

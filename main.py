@@ -1,11 +1,12 @@
 import numpy as np
 
-from src.data_loader import load_panel, chronological_split, FEATURE_COLS
+from src.data_loader import load_panel, chronological_split, chronological_split_forecast, FEATURE_COLS
 from src.models import (
     make_logistic_model,
     make_tree_model,
     naive_carry_forward_baseline,
     majority_class_baseline,
+    forecast_carry_forward_baseline,
 )
 from src.evaluation import (
     evaluate_predictions,
@@ -15,6 +16,61 @@ from src.evaluation import (
 from src.interpretation import plot_tree_importance
 
 from sklearn.metrics import accuracy_score
+
+def run_forecast_robustness(df):
+    print("\n=== Robustness: Forecast decoupling at t+1 using features at t ===")
+
+    (
+        X_train, X_val, X_test,
+        y_train, y_val, y_test,
+        df_train, df_val, df_test
+    ) = chronological_split_forecast(df)
+
+    print("\n[DEBUG] Forecast split years (feature year)")
+    print("train years:", sorted(df_train["year"].unique())[:3], "...", sorted(df_train["year"].unique())[-3:])
+    print("val years  :", sorted(df_val["year"].unique()))
+    print("test years :", sorted(df_test["year"].unique()))
+
+    print("\n[DEBUG] Forecast class balance")
+    print("train mean decoupled_next:", float(np.mean(y_train)))
+    print("val   mean decoupled_next:", float(np.mean(y_val)))
+    print("test  mean decoupled_next:", float(np.mean(y_test)))
+
+    # Train models
+    log_model = make_logistic_model()
+    tree_model = make_tree_model()
+    log_model.fit(X_train, y_train)
+    tree_model.fit(X_train, y_train)
+
+    # Tune logistic threshold on VAL (feature year 2021 -> target 2022)
+    val_proba = log_model.predict_proba(X_val)[:, 1]
+    best_t, best_val_f1 = find_best_threshold(y_val.to_numpy(), val_proba)
+    print(f"[DEBUG] forecast logistic best threshold on val={best_t:.2f} (val f1={best_val_f1:.3f})")
+
+    # Test predictions (feature year 2022 -> target 2023)
+    test_proba = log_model.predict_proba(X_test)[:, 1]
+    y_pred_log = (test_proba >= best_t).astype(int)
+    y_pred_tree = tree_model.predict(X_test)
+    print("[DEBUG] forecast_tree predicted positives:", int(np.sum(y_pred_tree)))
+    print("[DEBUG] forecast true positives:", int(np.sum(y_test)))
+
+
+    # Majority baseline
+    maj = majority_class_baseline(y_train)
+    y_pred_majority = np.full(shape=len(y_test), fill_value=maj, dtype=int)
+
+    # Baselines will be added in Step 3
+    evaluate_predictions(y_test, y_pred_log, "forecast_logistic")
+    evaluate_predictions(y_test, y_pred_tree, "forecast_tree")
+    evaluate_predictions(y_test, y_pred_majority, "forecast_baseline_majority")
+
+    y_pred_fc = forecast_carry_forward_baseline(
+    df_test=df_test,
+    df_full=df,
+    target_col="decoupled",
+    majority_class=maj,
+    )
+    evaluate_predictions(y_test, y_pred_fc, "forecast_baseline_carry_forward")
 
 
 def main():
@@ -126,7 +182,10 @@ def main():
     plot_tree_importance(tree_model, FEATURE_COLS)
     print("Saved: results/figures/tree_importances.png")
 
-    print("\n=== Phase 2 completed successfully ===")
+    run_forecast_robustness(df)
+
+
+    print("\=== Phase 2 completed successfully ===")
     print("=== Phase 3 completed successfully ===")
 
 
