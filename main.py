@@ -185,7 +185,7 @@ def main():
     run_forecast_robustness(df)
 
 
-    print("\=== Phase 2 completed successfully ===")
+    print("=== Phase 2 completed successfully ===")
     print("=== Phase 3 completed successfully ===")
 
 

@@ -21,6 +21,7 @@ As a robustness check, the analysis additionally evaluates one-year-ahead foreca
 - **Sources:**  
   - World Bank, *World Development Indicators* (GDP growth)  
   - Our World in Data, *CO₂ and Greenhouse Gas Emissions*  
+  - OECD membership is enforced via a fixed ISO-3 country list (see `notebooks/01_build_panel.ipynb`)
   
 Details on raw data acquisition and source URLs are provided in `notebooks/01_build_panel.ipynb`.
 
@@ -143,6 +144,6 @@ All results in the main text are produced via `main.py`.
 All results reported in the accompanying report are generated programmatically via `main.py`.
 
 Raw data files are intentionally excluded from the repository via `.gitignore`.  
-The data sources and download logic are documented explicitly in the notebook `notebooks/01_build_panel.ipynb`, which retrieves the original public datasets (OECD, OWID, World Bank) and constructs the final processed panel.
+The data sources and download logic are documented explicitly in the notebook `notebooks/01_build_panel.ipynb`, which retrieves the original public datasets (OWID emissions and World Bank WDI GDP growth) and constructs the final processed panel. OECD membership is enforced via a fixed ISO-3 country list.
 
 The pipeline additionally produces evaluation outputs for a one-year-ahead forecasting robustness check; these results are documented and interpreted in the report but are generated automatically using the same entry point.
