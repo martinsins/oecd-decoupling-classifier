@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.tree import DecisionTreeClassifier   # ← THIS LINE
+from sklearn.tree import DecisionTreeClassifier  
 
 def make_logistic_model(random_state: int = 42) -> Pipeline:
     return Pipeline(
@@ -15,7 +15,7 @@ def make_logistic_model(random_state: int = 42) -> Pipeline:
             ("clf", LogisticRegression(
                 max_iter=2000,
                 random_state=random_state,
-                class_weight="balanced"   # <-- add this
+                class_weight="balanced"
             )),
         ]
     )
@@ -48,7 +48,7 @@ def majority_class_baseline(
     """
     Return the majority class label in the training labels.
     """
-    # value_counts() returns counts by class label; idxmax() gives the most frequent label
+    
     return int(y_train.value_counts().idxmax())
 
 def forecast_carry_forward_baseline(

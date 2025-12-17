@@ -13,20 +13,7 @@ def plot_tree_importance(
     out_dir: str = "results/figures",
     filename: str = "tree_importances.png",
 ) -> Path:
-    """
-    Save a simple bar plot of DecisionTreeClassifier.feature_importances_.
 
-    Parameters
-    ----------
-    tree_model : fitted sklearn.tree.DecisionTreeClassifier
-    feature_names : list of feature names in the same order as training columns
-    out_dir : output directory
-    filename : output image name
-
-    Returns
-    -------
-    Path to the saved figure.
-    """
     out_path = Path(out_dir)
     out_path.mkdir(parents=True, exist_ok=True)
 
